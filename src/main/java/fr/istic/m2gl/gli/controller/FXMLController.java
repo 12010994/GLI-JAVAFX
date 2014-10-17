@@ -1,4 +1,4 @@
-package fr.istic.m2gl.gli.model;
+package fr.istic.m2gl.gli.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
