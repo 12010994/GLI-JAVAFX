@@ -6,11 +6,10 @@ public class Controller {
     
 	private MainApp app;
 	
-	
 	public static void main(String[] args) {
 		Controller controller = new Controller();
 		controller.app = new MainApp();
-		//controller.app.g
+		//controller.app.tile1.
 		
 	}
  

@@ -9,11 +9,12 @@ import javafx.stage.Stage;
 
 public class MainApp extends Application {
 
+	public TileView tile1;
     @Override
     public void start(Stage primaryStage) throws Exception {
     	Group root = new Group();
     	Scene scene = new Scene(root,380,350,Color.BEIGE);
-    	TileView tile1 = new TileView();
+    	tile1 = new TileView();
     	TileView tile2 = new TileView();
     	TileView tile3 = new TileView();
     	tile1.setTranslateX(0);
