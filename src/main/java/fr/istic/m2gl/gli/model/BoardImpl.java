@@ -63,6 +63,23 @@ public class BoardImpl implements Board {
 	public void commit() {
 
 		currentBoard = nextBoard;
+		
+		currentBoard[1][1]=new TileImpl(5);
+		for (int i =0; i<currentBoard.length; i++){
+			for (int y = 0; y < currentBoard.length; y++){
+				if(currentBoard[i][y] != null){
+					System.out.print(currentBoard[i][y].getRank()+ " ");
+				}else{
+					System.out.print(currentBoard[i][y]+ " ");
+				}
+			}
+			System.out.println("/n");
+		}
+		directionToPackInto = Direction.LEFT;
+		packLine(1);
+		//TODO ajout pion
+		
+		
 		nextBoard = new Tile[sideSizeInSquares][sideSizeInSquares];
 	}
 
@@ -102,7 +119,7 @@ public class BoardImpl implements Board {
 			// Done with the current tile read, move forward
 			readIndex++;
 		}
-
+		System.out.println(readIndex);
 
 	}
 

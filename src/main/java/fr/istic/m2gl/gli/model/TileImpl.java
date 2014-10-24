@@ -2,6 +2,7 @@ package fr.istic.m2gl.gli.model;
 
 public class TileImpl implements Tile {
 	private int rank;
+	
 	public TileImpl(int rank) {
 		this.rank = rank;
 	}
