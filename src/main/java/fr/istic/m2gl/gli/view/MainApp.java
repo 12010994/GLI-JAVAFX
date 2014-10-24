@@ -5,24 +5,22 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import fr.istic.m2gl.gli.controller.Controller;
 
 
 public class MainApp extends Application {
 
-	public TileView tile1;
+	public BoardView boardView;
+	
     @Override
     public void start(Stage primaryStage) throws Exception {
+
     	Group root = new Group();
     	Scene scene = new Scene(root,380,350,Color.BEIGE);
-    	tile1 = new TileView();
-    	TileView tile2 = new TileView();
-    	TileView tile3 = new TileView();
-    	tile1.setTranslateX(0);
-    	tile2.setTranslateX(90);
-    	tile3.setTranslateX(180);
-    	root.getChildren().add(tile1);
-        root.getChildren().add(tile2);
-        root.getChildren().add(tile3);
+    	
+    	boardView = new BoardView();
+    	new Controller(boardView);
+        root.getChildren().add(boardView);
         
         primaryStage.setTitle("512");
         primaryStage.setScene(scene);

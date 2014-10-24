@@ -1,16 +1,27 @@
 package fr.istic.m2gl.gli.controller;
 
-import fr.istic.m2gl.gli.view.MainApp;
+import javafx.event.EventHandler;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import fr.istic.m2gl.gli.view.BoardView;
 
-public class Controller {
-    
-	private MainApp app;
-	
-	public static void main(String[] args) {
-		Controller controller = new Controller();
-		controller.app = new MainApp();
-		//controller.app.tile1.
+public class Controller{
+
+	public Controller(BoardView boardView){
 		
+		
+		
+		boardView.setOnKeyPressed(new EventHandler<KeyEvent>(){
+			public void handle(KeyEvent ke){
+				System.out.println("Key pressed");
+			}
+		});
+		
+		boardView.setOnMousePressed(new EventHandler<MouseEvent>(){
+			public void handle(MouseEvent ke){
+				System.out.println("Mouse pressed");
+			}
+		});
 	}
- 
+
 }
