@@ -14,16 +14,13 @@ public class MainApp extends Application {
 	
     @Override
     public void start(Stage primaryStage) throws Exception {
-
-    	Group root = new Group();
-    	Scene scene = new Scene(root,380,350,Color.BEIGE);
     	
     	boardView = new BoardView();
+    	
     	new Controller(boardView);
-        root.getChildren().add(boardView);
-        
+    	
         primaryStage.setTitle("512");
-        primaryStage.setScene(scene);
+        primaryStage.setScene(boardView.scene);
         primaryStage.show();
     }
 
