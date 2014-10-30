@@ -14,4 +14,5 @@ public class TileImpl implements Tile {
 	public void incrementRank() {
 		this.rank++;
 	}
+	
 }
