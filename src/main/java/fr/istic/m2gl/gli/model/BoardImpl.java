@@ -3,11 +3,7 @@ package fr.istic.m2gl.gli.model;
 import java.util.Random;
 import java.util.logging.Logger;
 
-/**
- * Created by plouzeau on 2014-10-09.
- */
 public class BoardImpl implements Board {
-
 
 	private final int sideSizeInSquares;
 	private Direction directionToPackInto;
@@ -23,7 +19,6 @@ public class BoardImpl implements Board {
 		//Ajout de 2 pions a la création de la board
 		RandomTile();
 		RandomTile();
-		
 		
 		nextBoard = currentBoard;
 	}
@@ -68,23 +63,10 @@ public class BoardImpl implements Board {
 	 * NOTE: do we need this in the interface?
 	 */
 	@Override
-	public void commit(Direction direction) {
-
-		currentBoard = nextBoard;
-		
-		
-		
-		directionToPackInto = direction;
-		for (int i =1; i<=currentBoard.length; i++){
-			packLine(i);
-		}
-		RandomTile();
-		
-
-		currentBoard = nextBoard;
-		//nextBoard = new Tile[sideSizeInSquares][sideSizeInSquares];
+	public void commit() {
+		currentBoard = nextBoard;  
+        nextBoard = new Tile[sideSizeInSquares][sideSizeInSquares];
 	}
-
 
 	private void packLine(int lineNumber) {
 		/*
@@ -95,16 +77,15 @@ public class BoardImpl implements Board {
 		 * Remember that indices are 1-based in this code
 		 * Conversion to Java arrays indices is done in computeLineIndex and computeColumnIndex
 		 */
+		
 		int readIndex = 1; // Position of the tile to be read
 		int writeIndex = 0; // Position of the last tile written
-		//System.out.println("line number : " +lineNumber);
 		while (readIndex <= sideSizeInSquares) {
 			// Find next tile
 			while ((readIndex <= sideSizeInSquares)
 					&& (readTile(currentBoard, lineNumber, readIndex) == null)) {
 				readIndex++;
 			}
-			//System.out.println("sortie du parcours : "+readIndex);
 			if (readIndex > sideSizeInSquares) {
 				break; // Done with the line
 			}
@@ -114,13 +95,11 @@ public class BoardImpl implements Board {
 							== readTile(currentBoard, lineNumber, readIndex).getRank())) {
 				// Merge previously written tile and currently read one
 				readTile(nextBoard, lineNumber, writeIndex).incrementRank();
-				//System.out.print("  writeindex : "+writeIndex);
 				writeTile(nextBoard, null, lineNumber, readIndex);
 			} else {
 				// Advance write index and copy currently read tile
 				writeIndex++;
 				writeTile(nextBoard, readTile(currentBoard, lineNumber, readIndex), lineNumber, writeIndex);
-				//System.out.print("  read " +readIndex);
 				if(writeIndex != readIndex){
 					writeTile(nextBoard, null, lineNumber, readIndex);
 				}
@@ -255,17 +234,18 @@ public class BoardImpl implements Board {
 	
 	public void RandomTile(){
 		Random r = new Random();
-		int i = (r.nextInt(sideSizeInSquares-1));	
-		int y = (r.nextInt(sideSizeInSquares-1));
+		int sizeBoard = sideSizeInSquares-1;
+		int i = (r.nextInt(sizeBoard));	
+		int y = (r.nextInt(sizeBoard));
 		
 		while(getTile(i+1, y+1)!= null){
-			i = r.nextInt(sideSizeInSquares-1);
-			y = r.nextInt(sideSizeInSquares-1);
+			i = r.nextInt(sizeBoard);
+			y = r.nextInt(sizeBoard);
 		}
-		//System.out.print("    i : "+ i +" y : "+y);
 		currentBoard[i][y]= new TileImpl(1);
 	}
 	
+
 	@Override
 	public String printBoard(){
 		if(currentBoard.length == 0){
@@ -283,6 +263,12 @@ public class BoardImpl implements Board {
 			result = result + "\n";
 		}
 		return result;
+	}
+	
+	public void move(Direction direction){
+		packIntoDirection(direction);
+		commit();
+		RandomTile();
 	}
 	
 

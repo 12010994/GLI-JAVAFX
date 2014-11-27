@@ -34,9 +34,11 @@ public interface Board {
 	 * Validate the step effects
 	 * NOTE: do we need this in the interface?
 	 */
-	void commit(Direction direction);
+	void commit();
 
 	String printBoard();
+	
+	void move(Direction direction);
 
 
 }
