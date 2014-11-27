@@ -38,7 +38,7 @@ public class BoardView {
 		root.getChildren().clear();
 		
 		//création de la board avec 4 cases
-		boardImpl = new BoardImpl(3);
+		boardImpl = new BoardImpl(4);
 		finish = false;
 		printBoard();
 	}
