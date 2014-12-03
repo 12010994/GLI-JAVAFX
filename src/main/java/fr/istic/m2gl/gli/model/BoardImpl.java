@@ -1,7 +1,14 @@
 package fr.istic.m2gl.gli.model;
 
+import java.awt.Point;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
 import java.util.Random;
 import java.util.logging.Logger;
+
 
 public class BoardImpl implements Board {
 
@@ -15,11 +22,11 @@ public class BoardImpl implements Board {
 		this.sideSizeInSquares = sideSizeInSquares;
 		currentBoard = new Tile[sideSizeInSquares][sideSizeInSquares];
 		nextBoard = new Tile[sideSizeInSquares][sideSizeInSquares];
-		
+
 		//Ajout de 2 pions a la création de la board
 		RandomTile();
 		RandomTile();
-		
+
 		nextBoard = currentBoard;
 	}
 
@@ -65,7 +72,7 @@ public class BoardImpl implements Board {
 	@Override
 	public void commit() {
 		currentBoard = nextBoard;  
-        nextBoard = new Tile[sideSizeInSquares][sideSizeInSquares];
+		nextBoard = new Tile[sideSizeInSquares][sideSizeInSquares];
 	}
 
 	private void packLine(int lineNumber) {
@@ -77,7 +84,7 @@ public class BoardImpl implements Board {
 		 * Remember that indices are 1-based in this code
 		 * Conversion to Java arrays indices is done in computeLineIndex and computeColumnIndex
 		 */
-		
+
 		int readIndex = 1; // Position of the tile to be read
 		int writeIndex = 0; // Position of the last tile written
 		while (readIndex <= sideSizeInSquares) {
@@ -106,7 +113,7 @@ public class BoardImpl implements Board {
 			}
 			// Done with the current tile read, move forward
 			readIndex++;
-			
+
 		}
 
 	}
@@ -231,20 +238,37 @@ public class BoardImpl implements Board {
 			logger.info(outputBuffer.toString());
 		}
 	}
-	
+
 	public void RandomTile(){
-		Random r = new Random();
-		int sizeBoard = sideSizeInSquares-1;
-		int i = (r.nextInt(sizeBoard));	
-		int y = (r.nextInt(sizeBoard));
-		
-		while(getTile(i+1, y+1)!= null){
-			i = r.nextInt(sizeBoard);
-			y = r.nextInt(sizeBoard);
+		Random randomInt = new Random();
+		Tile tileGenerator = new TileImpl(1);
+
+		Map<Point, Tile> availableCase =  getFreeTiles();
+
+		if(!availableCase.isEmpty()){
+			LinkedList list = new LinkedList(availableCase.keySet());
+			Collections.shuffle(list);
+			Point coordToInsertTile = (Point) list.get(0);
+			this.currentBoard[coordToInsertTile.x][coordToInsertTile.y] = tileGenerator;
 		}
-		currentBoard[i][y]= new TileImpl(1);
 	}
-	
+
+	public Map getFreeTiles(){
+
+		// Map qui permet de stocker les emplacements disponibles pour en suite générer une Tile
+		Map<Point, Tile> myMap =  new HashMap<Point, Tile>();
+
+		for(int line = 0; line < sideSizeInSquares; line++){
+			for(int col = 0; col < sideSizeInSquares; col++){
+				// Si dans cette case je n'ai pas de Tile, je l'ajoute dans la Map des dispos
+				if(currentBoard[line][col] == null){
+					Point key = new Point(line, col);
+					myMap.put(key, new TileImpl(1));
+				}
+			}
+		}
+		return myMap;
+	}
 
 	@Override
 	public String printBoard(){
@@ -264,12 +288,58 @@ public class BoardImpl implements Board {
 		}
 		return result;
 	}
-	
+
 	public void move(Direction direction){
+		
+		int[][] old = new int[sideSizeInSquares][sideSizeInSquares];
+		
+		int[][] newTab = new int[sideSizeInSquares][sideSizeInSquares];
+
+		//stockage avant mouvement
+		for (int i =0; i<currentBoard.length; i++){
+			for (int y = 0; y < currentBoard.length; y++){
+				if(currentBoard[i][y] != null){
+					old[i][y] = currentBoard[i][y].getRank();
+				}else{
+					old[i][y] = 0;
+				}
+			}
+		}
+		//deplacement
 		packIntoDirection(direction);
-		commit();
-		RandomTile();
+
+		//stockage après mouvement
+		for (int i =0; i<currentBoard.length; i++){
+			for (int y = 0; y < currentBoard.length; y++){
+				if(currentBoard[i][y] != null){
+					newTab[i][y] = currentBoard[i][y].getRank();
+				}else{
+					newTab[i][y] = 0;
+				}
+			}
+		}
+		//test si les 2 tab sont équivalentes 
+		if(!Arrays.deepEquals(old, newTab)){
+			RandomTile();
+		}
+
+
 	}
 	
+	//si plus aucun déplacement de possible
+	public boolean gameOver(){
+		for(int i =0; i<sideSizeInSquares-1; i++){
+			for(int y =0; y<sideSizeInSquares-1; y++){
+				if( i == sideSizeInSquares){
+					if(currentBoard[i][y].getRank() == currentBoard[i][y+1].getRank())
+						return(true);
+				}else{
+					if(currentBoard[i][y].getRank() == currentBoard[i][y+1].getRank() || currentBoard[i][y].getRank() == currentBoard[i+1][y].getRank())
+						return(true);	
+				}
+			}
+		}
+		return false;
+	}
 
 }

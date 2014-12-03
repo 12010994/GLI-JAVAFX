@@ -40,5 +40,8 @@ public interface Board {
 	
 	void move(Direction direction);
 
+	public boolean gameOver();
+
+
 
 }

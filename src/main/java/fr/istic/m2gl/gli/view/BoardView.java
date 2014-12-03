@@ -12,43 +12,44 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class BoardView {
-	
+
 	public Scene scene;
 	public Group root;
 	public Board boardImpl;
-	
+
 	private Text msg;
 	private Rectangle btn;
-	
+
 	private Text msgBtn;
-	
+
 	private boolean finish;
-	
+
 	public TileView tileTmp;
-	
-		
+
+
 	public BoardView(){
 		BoardNew();
 	}
-	
+
 	public void BoardNew(){
 		root = new Group();
 		scene = new Scene(root,370,370, Color.web("0xbbada0"));
-		
+
 		root.getChildren().clear();
-		
+
 		//création de la board avec 4 cases
 		boardImpl = new BoardImpl(4);
 		finish = false;
 		printBoard();
 	}
-	
+
 	public void printBoard(){
 		//on supprime l'ensemble des enfants de la précédente version
 		root.getChildren().clear();
-		
+
 		//sauvegarde du rank max pour savoir si jeu fini
 		int maxRank = 0;
+		int nb = 0;
 		String result = "";
 		//coordonnées x pour le carré 
 		int valueX = 10;
@@ -56,7 +57,7 @@ public class BoardView {
 		for(int i =1 ; i<= boardImpl.getSideSizeInSquares(); i++ ){
 			int valueY = 10;
 			for( int y = 1; y <= boardImpl.getSideSizeInSquares(); y++){
-				
+
 				//test si on a un pion a afficher sinon case vide
 				if(boardImpl.getTile(y, i) != null){
 					int rank = boardImpl.getTile(y, i).getRank();
@@ -64,6 +65,7 @@ public class BoardView {
 					if(rank > maxRank){
 						maxRank = rank;
 					}
+					nb ++ ;
 				}else{
 					tileTmp = new TileView();
 				}
@@ -74,13 +76,22 @@ public class BoardView {
 			}
 			result = result + "\n";
 			valueX += 90;
+			//gagné
 			if(maxRank == 9){
 				finish = true;
 				WinORGameOver(true);
 			}
 		}
+		if(nb == 9){
+			//Perdu
+			if(boardImpl.gameOver() == false){
+				System.out.println("GAME OVER");
+				WinORGameOver(false);
+			}
+		}
+
 	}
-	
+	//interface game over ou Bravo
 	public void WinORGameOver(boolean game){
 		btn = new Rectangle();
 		root.getChildren().clear();
@@ -89,7 +100,7 @@ public class BoardView {
 			msg = new Text("Bravo");
 			msg.setX(100);
 			msg.setY(100);
-			
+
 		}else{
 			msg = new Text("Game Over");
 			msg.setX(50);
@@ -101,7 +112,7 @@ public class BoardView {
 		msgBtn.setFill(Color.WHITE);
 		msgBtn.setX(85);
 		msgBtn.setY(250);
-		
+
 		btn.setWidth(240);
 		btn.setHeight(80);
 		btn.setX(70);
@@ -112,13 +123,13 @@ public class BoardView {
 		root.getChildren().add(btn);
 		root.getChildren().add(msg);
 		root.getChildren().add(msgBtn);
-		
+
 	}
-	
+
 	public boolean isFinish() {
 		return finish;
 	}
-	
+
 	public void hasCliked(MouseEvent e){
 		if( btn.contains(e.getX(), e.getY())){
 			System.out.println("oui");
@@ -126,8 +137,8 @@ public class BoardView {
 		}else{
 			System.out.println("non");
 		}
-		
+
 	}
 
-		
+
 }
