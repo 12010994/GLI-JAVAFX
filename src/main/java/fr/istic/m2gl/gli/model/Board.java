@@ -29,17 +29,19 @@ public interface Board {
 	 * @param direction  where to push the tiles
 	 */
 	void packIntoDirection(Direction direction);
+	
+	String printBoard();
 
 	/**
-	 * Validate the step effects
-	 * NOTE: do we need this in the interface?
+	 * mouvement de la board + ajout d'un pion 
+	 * @param direction
 	 */
-	void commit();
-
-	String printBoard();
-	
 	void move(Direction direction);
-
+	
+	/**
+	 * Partie perdue si plus aucun déplacement de possible
+	 * @return false partie perdu
+	 */
 	public boolean gameOver();
 
 

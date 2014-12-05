@@ -43,6 +43,9 @@ public class BoardView {
 		printBoard();
 	}
 
+	/**
+	 * affiche la board 
+	 */
 	public void printBoard(){
 		//on supprime l'ensemble des enfants de la précédente version
 		root.getChildren().clear();
@@ -82,7 +85,7 @@ public class BoardView {
 				WinORGameOver(true);
 			}
 		}
-		if(nb == 9){
+		if(nb == 16){
 			//Perdu
 			if(boardImpl.gameOver() == false){
 				System.out.println("GAME OVER");
@@ -91,7 +94,11 @@ public class BoardView {
 		}
 
 	}
-	//interface game over ou Bravo
+	
+	/**
+	 * interface game over ou Bravo
+	 * @param game
+	 */
 	public void WinORGameOver(boolean game){
 		btn = new Rectangle();
 		root.getChildren().clear();

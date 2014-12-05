@@ -11,7 +11,10 @@ public class TileView extends Parent {
 	private Rectangle tile;
 	public Text value;
 
-	//constructeur pion avec valeur
+	/**
+	 * constructeur pion avec valeur
+	 * @param val
+	 */
 	public TileView(int val){
 
 		tile = new Rectangle();
@@ -47,7 +50,10 @@ public class TileView extends Parent {
 		this.getChildren().add(value);
 	}
 	
-	//constructeur pion vide
+	
+	/**
+	 * constructeur pion vide
+	 */
 	public TileView(){
 		tile = new Rectangle();
 		tile.setWidth(80);
@@ -62,7 +68,11 @@ public class TileView extends Parent {
 		this.value.setText(value);
 	}
 	
-	//retourne valeur du pion suivant le rank
+	/**
+	 * retourne valeur du pion suivant le rank
+	 * @param rank
+	 * @return num
+	 */
 	public String getNumRank(int rank){
 		String num;
 		switch (rank) {

@@ -65,16 +65,6 @@ public class BoardImpl implements Board {
 
 	}
 
-	/**
-	 * Validate the step effects
-	 * NOTE: do we need this in the interface?
-	 */
-	@Override
-	public void commit() {
-		currentBoard = nextBoard;  
-		nextBoard = new Tile[sideSizeInSquares][sideSizeInSquares];
-	}
-
 	private void packLine(int lineNumber) {
 		/*
 		 * Scan the current board line looking for two consecutive tiles
@@ -238,7 +228,9 @@ public class BoardImpl implements Board {
 			logger.info(outputBuffer.toString());
 		}
 	}
-
+	/**
+	 * Tile aléatoire
+	 */
 	public void RandomTile(){
 		Random randomInt = new Random();
 		Tile tileGenerator = new TileImpl(1);
@@ -288,11 +280,13 @@ public class BoardImpl implements Board {
 		}
 		return result;
 	}
-
+	
+	/**
+	 * mouvement de la board + ajout d'un pion 
+	 * @param Direction des pions a appliquer 
+	 */
 	public void move(Direction direction){
-		
 		int[][] old = new int[sideSizeInSquares][sideSizeInSquares];
-		
 		int[][] newTab = new int[sideSizeInSquares][sideSizeInSquares];
 
 		//stockage avant mouvement
@@ -322,11 +316,12 @@ public class BoardImpl implements Board {
 		if(!Arrays.deepEquals(old, newTab)){
 			RandomTile();
 		}
-
-
 	}
 	
-	//si plus aucun déplacement de possible
+	/**
+	 * Partie perdue si plus aucun déplacement de possible
+	 * @return false si partie perdue
+	 */
 	public boolean gameOver(){
 		for(int i =0; i<sideSizeInSquares-1; i++){
 			for(int y =0; y<sideSizeInSquares-1; y++){
