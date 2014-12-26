@@ -1,13 +1,10 @@
 package fr.istic.m2gl.gli.view;
 
-
 import fr.istic.m2gl.gli.model.Board;
 import fr.istic.m2gl.gli.model.BoardImpl;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
@@ -18,9 +15,6 @@ public class BoardView {
 	public Board boardImpl;
 
 	private Text msg;
-	private Rectangle btn;
-
-	private Text msgBtn;
 
 	private boolean finish;
 
@@ -100,7 +94,6 @@ public class BoardView {
 	 * @param game
 	 */
 	public void WinORGameOver(boolean game){
-		btn = new Rectangle();
 		root.getChildren().clear();
 		scene.setFill(Color.web("0xccc0b4"));
 		if(game){
@@ -114,38 +107,13 @@ public class BoardView {
 			msg.setY(100);
 		}
 		msg.setFont(new Font(50));
-		msgBtn = new Text("RECOMMENCER");
-		msgBtn.setFont(new Font(25));
-		msgBtn.setFill(Color.WHITE);
-		msgBtn.setX(85);
-		msgBtn.setY(250);
 
-		btn.setWidth(240);
-		btn.setHeight(80);
-		btn.setX(70);
-		btn.setY(200);
-		btn.setArcWidth(20);
-		btn.setArcHeight(20);
-		btn.setFill(Color.web("0x776e65"));
-		root.getChildren().add(btn);
 		root.getChildren().add(msg);
-		root.getChildren().add(msgBtn);
 
 	}
 
 	public boolean isFinish() {
 		return finish;
 	}
-
-	public void hasCliked(MouseEvent e){
-		if( btn.contains(e.getX(), e.getY())){
-			System.out.println("oui");
-			BoardNew();
-		}else{
-			System.out.println("non");
-		}
-
-	}
-
 
 }
