@@ -6,8 +6,16 @@ import fr.istic.m2gl.gli.model.*;
 import fr.istic.m2gl.gli.model.Board.Direction;
 import fr.istic.m2gl.gli.view.BoardView;
 
+/**
+ * The Class Controller is here to handle the user keyboard interaction.
+ */
 public class Controller{
 
+	/**
+	 * The constructor instantiates a new controller.
+	 * Handle the keyboard events from the view.
+	 * @param boardView the board view
+	 */
 	public Controller(final BoardView boardView){	
 
 		boardView.scene.setOnKeyPressed(new EventHandler<KeyEvent>(){

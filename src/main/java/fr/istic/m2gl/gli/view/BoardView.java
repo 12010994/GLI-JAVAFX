@@ -8,19 +8,33 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+/**
+ * The Class BoardView.
+ */
 public class BoardView {
 
+	/** The JavaFX scene. */
 	public Scene scene;
+	
+	/** The JavaFX root. */
 	public Group root;
+	
+	/** The board impl. The view know the model to collect data to update*/
 	public Board boardImpl;
 
+	/** The JavaFX message to print */
 	private Text msg;
 
+	/** The game state. */
 	private boolean finish;
 
+	/** The temporary tileView */
 	public TileView tileTmp;
 
 
+	/**
+	 * Instantiates a new board view.
+	 */
 	public BoardView(){
 		BoardNew();
 	}
@@ -38,7 +52,7 @@ public class BoardView {
 	}
 
 	/**
-	 * affiche la board 
+	 * affiche la board.
 	 */
 	public void printBoard(){
 		//on supprime l'ensemble des enfants de la précédente version
@@ -90,8 +104,8 @@ public class BoardView {
 	}
 	
 	/**
-	 * interface game over ou Bravo
-	 * @param game
+	 * interface game over ou Bravo.
+	 * @param game the game
 	 */
 	public void WinORGameOver(boolean game){
 		root.getChildren().clear();
@@ -112,6 +126,10 @@ public class BoardView {
 
 	}
 
+	/**
+	 * Checks if is finish.
+	 * @return true, if is finish
+	 */
 	public boolean isFinish() {
 		return finish;
 	}

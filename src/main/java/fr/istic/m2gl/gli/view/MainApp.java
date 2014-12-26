@@ -5,8 +5,12 @@ import javafx.stage.Stage;
 import fr.istic.m2gl.gli.controller.Controller;
 
 
+/**
+ * The JavaFX Class MainApp.
+ */
 public class MainApp extends Application {
 
+	/** The board view. */
 	public BoardView boardView;
 
 	@Override
@@ -22,7 +26,6 @@ public class MainApp extends Application {
 
 	}
 
-	
 	/**
 	 * The main() method is ignored in correctly deployed JavaFX application.
 	 * main() serves only as fallback in case the application can not be
