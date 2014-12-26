@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.Random;
 import java.util.logging.Logger;
 
-
 public class BoardImpl implements Board {
 
 	private final int sideSizeInSquares;
